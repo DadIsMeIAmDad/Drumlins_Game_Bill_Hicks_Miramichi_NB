@@ -1,0 +1,196 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: black;
+}
+
+#game {
+  display: block;
+}
+
+/* style.css */
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+
+#startButton {
+  padding: 20px 40px;
+
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  user-select: none;
+
+  width: 13%;
+}
+
+#startButton:hover img {
+  transform: scale(1.1); /* Grows the image by 10% */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+#startButton img {
+  transition: transform 0.3s ease;
+}
+
+#startButton:not(.ready) {
+  cursor: default;
+}
+#socialLinks {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000; /* stays above canvas */
+}
+
+#socialLinks img {
+  width: 32px;   /* adjust size here */
+  height: 32px;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+#socialLinks img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+#socialLinks {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.icon {
+  position: relative;
+  display: inline-block;
+}
+
+.icon img {
+  width: 32px;
+  height: 32px;
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.icon img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* TOOLTIP */
+.tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 100%;
+  transform: translateX(-50%);
+  max-width: 200px; /* or whatever fits your layout */
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+
+/* show on hover */
+.icon:hover .tooltip {
+  opacity: 1;
+}
+
+.top-icons {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  display: flex;
+  gap: 15px; /* Adjust spacing between icons */
+}
+
+.icon {
+  width: 50px; /* Or whatever size matches your other icons */
+  height: auto;
+  cursor: pointer;
+}
+#zoomSlider {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  z-index: 9999;
+}
+#sizeSlider {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Fade-out transition */
+  transition: opacity 0.6s ease;
+
+  /* Background image behind button */
+  background-image: url("img/start-bg.png"); /* <-- your image */
+  background-size: contain;   /* or "cover" depending on your art */
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: auto;
+}
+
+#startButton {
+  position: relative; /* stays above the image */
+  z-index: 10;        /* ensures button is always on top */
+}
+#startTip {
+  margin-top: 20px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  max-width: 400px;
+  text-shadow:
+    10px 10px 10px rgba(0, 0, 0, 1.0),
+    10px 10px 10px rgba(0, 0, 0, 1.0),
+	    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+  opacity: 1.0;
+
+  pointer-events: none; /* optional */
+}
+canvas {
+  touch-action: none;
+  display: flex;
+}
