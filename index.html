@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Drums In Space</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<script>
+
+let IntroDone = 0;
+let skipbuttonurl = "skip_button.png";
+
+const ua = navigator.userAgent;
+
+function isLandscape() {
+  // Modern check
+  if (window.matchMedia("(orientation: landscape)").matches) return true;
+
+  // iOS fallback
+  if (typeof window.orientation !== "undefined") {
+    return window.orientation === 90 || window.orientation === -90;
+  }
+
+  return false;
+}
+
+if (/Android/i.test(ua)) {
+
+skipbuttonurl = "skip_button_s.png";
+  
+  if (isLandscape()) {
+    console.log("Android in landscape");
+  } else {
+    alert("Turn Device to Landscape and Press OK.\nTurn it Sideways Grandpa!");
+	location.reload();
+  }
+
+} else if (/iPhone|iPad|iPod/i.test(ua)) {
+
+skipbuttonurl = "skip_button_s.png";  
+
+if (isLandscape()) {
+    console.log("iOS in landscape");
+  } else {
+    alert("Turn Device to Landscape and Press OK.\nTurn it Sideways Grandpa!");
+	location.reload();
+  }
+
+} else {
+  
+}
+
+
+</script>
+  <canvas id="game"></canvas>
+  
+  
+ <div id="uiContainer"> 
+<input type="range" id="sizeSlider" min="10" max="100" value="150" style="display:none;">
+
+  <!-- Intro music -->
+  <audio id="introMusic" src="music/intro.mp3" preload="auto"></audio>
+
+  <!-- Start screen overlay -->
+<div id="startScreen">
+
+  <div id="startContent">  <!-- ?? ADD THIS WRAPPER -->
+    <center><div id="startButton">Loading...</div></center>
+
+    <center><div id="startTip">
+      Tip: Resize Browser Window or Use Browser Zoom For More Fun!!!
+    </div></center>
+  </div>
+
+	<div id="socialLinks">
+  <a href="https://www.facebook.com/Drumlins-Cartoon-142706242399" target="_blank" class="icon">
+    <span class="tooltip">DRUMlin-DRAWings</span>
+    <img src="img/fb.png" alt="Facebook">
+  </a>
+
+  <a href="https://twitter.com/#!/drumlinscartoon" target="_blank" class="icon">
+    <span class="tooltip">#drumlinscartoon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <img src="img/twitter.png" alt="Twitter">
+  </a>
+
+  <a href="https://brokenshovelbar.com/" target="_blank" class="icon">
+    <span class="tooltip">BrokenShovelBar.com</span>
+    <img src="img/www.png" alt="Website">
+  </a>
+</div>
+  </div>
+</div>
+  <!-- Load game.js and detect when it finishes -->
+  <script>
+    const script = document.createElement("script");
+    script.src = "game.js";
+
+    script.onload = () => {
+      console.log("game.js loaded!");
+      window.dispatchEvent(new Event("game-loaded"));
+    };
+
+    document.body.appendChild(script);
+  </script>
+
+  <!-- Start button + audio + fade-out logic -->
+  <script>
+    const audio = document.getElementById("introMusic");
+    const btn = document.getElementById("startButton");
+    const startScreen = document.getElementById("startScreen");
+
+    // Button starts disabled
+    btn.style.pointerEvents = "none";
+    btn.style.opacity = "0.5";
+
+    // When game.js is ready, enable the button
+window.addEventListener("assets-loaded", () => {
+  btn.textContent = "Play";
+  btn.style.pointerEvents = "auto";
+  btn.style.opacity = "1";
+});
+
+
+    // Click to start game
+btn.addEventListener("click", () => {
+  audio.play();
+
+  // Tell game.js to start
+  window.dispatchEvent(new Event("start-game"));
+
+  startScreen.style.opacity = "0";
+  startScreen.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    startScreen.style.display = "none";
+  }, 600);
+});
+// Button starts disabled
+btn.style.pointerEvents = "none";
+btn.style.opacity = "0.5";
+btn.textContent = "Loading...";   // ensure correct initial state
+
+// When game.js is ready, enable the button
+window.addEventListener("game-loaded", () => {
+  btn.textContent = "Play";       // <-- change label here
+  btn.style.pointerEvents = "auto";
+  btn.style.opacity = "1";
+  btn.classList.add("ready");
+  document.getElementById('startButton').innerHTML = '<img src="img/startbutton.png" alt="Start" style="width: 100%; height: auto;">';
+});
+  </script>
+  <div class="top-icons">
+
+<img id="music-toggle" src="img/musicon.png" alt="Music Toggle" class="icon">
+<img id="next-song" src="img/next.png" alt="Next Song" class="icon" style="display:none;">
+<a href="" ><img id="exit-btn" src="img/exit.png" alt="Exit" class="icon"></a>
+
+</div>
+
+<div id="socialLinks">
+  <a href="https://www.facebook.com/Drumlins-Cartoon-142706242399" target="_blank" class="icon">
+    <span class="tooltip">DRUMlin-DRAWings</span>
+    <img src="img/fb.png" alt="Facebook">
+  </a>
+
+  <a href="https://twitter.com/#!/drumlinscartoon" target="_blank" class="icon">
+    <span class="tooltip">#drumlinscartoon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <img src="img/twitter.png" alt="Twitter">
+  </a>
+
+  <a href="https://brokenshovelbar.com/" target="_blank" class="icon">
+    <span class="tooltip">BrokenShovelBar.com</span>
+    <img src="img/www.png" alt="Website">
+  </a>
+</div>
+<script>const musicToggle = document.getElementById('music-toggle');
+const nextSong = document.getElementById('next-song');
+
+// Toggle music
+musicToggle.addEventListener('click', () => {
+  if (typeof window.toggleMusic === 'function') {
+    const muted = window.toggleMusic();
+
+    musicToggle.src = muted
+      ? 'img/musicoff.png'
+      : 'img/musicon.png';
+  }
+});
+
+// Next song
+nextSong.addEventListener('click', () => {
+  if (typeof window.changeSong === 'function') {
+    window.changeSong();
+  }
+});
+const sizeSlider = document.getElementById("sizeSlider");
+
+sizeSlider.addEventListener("input", () => {
+  drumScaleMultiplier = sizeSlider.value / 100;
+
+  if (typeof updateAllDrumSizes === "function") {
+    updateAllDrumSizes();
+  }
+});
+drums.forEach(drum => {
+  const newScale = drum.baseScale * drumScaleMultiplier;
+
+  drum.width = drum.originalImage.width * newScale;
+  drum.height = drum.originalImage.height * newScale;
+
+  drum.hitWidth = drum.width * 0.8;
+  drum.hitHeight = drum.height * 0.8;
+});
+
+canvas.addEventListener("pointerdown", (e) => {
+  const { x, y } = getPointerPos(e);
+
+  spawnDrum(x, y);
+});
+
+
+</script>
+
+
+
+</body>
+</html>
+
+
