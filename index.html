@@ -12,7 +12,25 @@
 
 const ua = navigator.userAgent;
 
-
+if (/Android/i.test(ua)) {
+  
+  if(window.innerHeight > window.innerWidth){
+    alert("Please use Landscape!");
+	location.reload();
+}
+  
+} else if (/iPhone|iPad|iPod/i.test(ua)) {
+  
+  if(window.innerHeight > window.innerWidth){
+    alert("Please use Landscape!");
+	location.reload();
+}
+  
+} else {
+  len fake = "";
+  
+  
+}
 
 </script>
   <canvas id="game"></canvas>
@@ -179,7 +197,9 @@ canvas.addEventListener("pointerdown", (e) => {
   spawnDrum(x, y);
 });
 
-
+window.addEventListener("resize", () => {
+  alert("Screen Orientation Changed");
+});
 
 
 
