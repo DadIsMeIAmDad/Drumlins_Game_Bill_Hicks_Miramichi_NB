@@ -44,7 +44,7 @@ let softSounds = [];
 let hardSounds = [];
 let lastCollisionSoundTime = 0;
 const collisionSoundCooldown = 120; // ms
-let drumScaleMultiplier = 1;
+let drumScaleMultiplier = 0.1;
 // Helper to load audio as HTMLAudioElement
 function loadAudio(src) {
   const a = new Audio(src);
@@ -829,8 +829,8 @@ window.addEventListener("start-game", () => {
   const sizeSlider = document.getElementById("sizeSlider");
 
   if (sizeSlider) {
-    sizeSlider.value = 50;
-    drumScaleMultiplier = 1;
+    sizeSlider.value = 25;
+    drumScaleMultiplier = 0.3;
   }
 });
 
